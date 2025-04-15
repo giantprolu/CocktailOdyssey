@@ -13,7 +13,9 @@ module.exports = {
         primary: {
           DEFAULT: '#FF6B6B',
           dark: '#E05050',
-          light: '#FF8A8A'
+          light: '#FF8A8A',
+          blue: '#2D3648',
+          orange: '#FF8A00',
         },
         secondary: {
           DEFAULT: '#4ECDC4',
@@ -27,15 +29,38 @@ module.exports = {
         light: {
           DEFAULT: '#F7F9FB',
           dark: '#E8EDF2'
-        }
+        },
+        cream: {
+          DEFAULT: '#FFF7ED'
+        },
+        'input-text': '#012436',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif']
+        sans: ['Poppins', 'sans-serif'],
+        serif: ['Orelega One', 'serif'],
+        rubik: ['Rubik', 'sans-serif'],
       },
       boxShadow: {
         'card': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
         'button': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-      }
+      },
+      letterSpacing: {
+        'heading': '0.02em', 
+        'tab': '0.03em',     
+        'input': '0.03em',  
+      },
+      lineHeight: {
+        'heading': '48px',
+        'tab': '100%',
+        'input': '100%',
+      },
+      fontSize: {
+        'heading': '40px',
+        'tab': '16px',
+      },
+      verticalAlign: {
+        'middle': 'middle',
+      },
     }
   },
   plugins: [],
