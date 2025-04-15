@@ -38,7 +38,7 @@
     <section class="py-16">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center mb-8">
-          <h2 class="text-3xl font-bold">Featured Cocktails</h2>
+          <h2 class="text-3xl font-bold">Nos recommandation</h2>
           <NuxtLink to="/explore" class="text-primary hover:text-primary-dark font-medium">
             View All
           </NuxtLink>
