@@ -73,13 +73,13 @@
           <div v-if="activeTab === 'ai'" class="w-full mb-8">
             <!-- Barre de recherche pour IA -->
             <div class="relative w-full mb-3">
-              <input 
+                <input 
                 type="text" 
-                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles"
+                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles focus:outline-none focus:ring-2 focus:ring-[#ffbf73]"
                 placeholder="Faire une recherche avec l'IA" 
                 v-model="searchQuery"
                 @input="handleSearch"
-              />
+                />
               <button class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-primary-orange/10 p-2 rounded-full">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.60234 14.3977C9.38088 14.1762 9.11051 14.0099 8.813 13.912L3 12L8.813 10.088C9.11051 9.99015 9.38088 9.82379 9.60234 9.60234C9.82379 9.38088 9.99015 9.11051 10.088 8.813L12 3L13.912 8.813C14.0099 9.11051 14.1762 9.38088 14.3977 9.60234C14.6191 9.82379 14.8895 9.99015 15.187 10.088L21 12L15.187 13.912C14.8895 14.0099 14.6191 14.1762 14.3977 14.3977C14.1762 14.6191 14.0099 14.8895 13.912 15.187L12 21L10.088 15.187C9.99015 14.8895 9.82379 14.6191 9.60234 14.3977ZM9.60234 14.3977L2.5 20.5M5 3V7M19 17V21M3 5H7M17 19H21" stroke="#FF8A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -103,7 +103,7 @@
             <div class="relative w-full mb-3">
               <input 
                 type="text" 
-                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles"
+                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles focus:outline-none focus:ring-2 focus:ring-[#012436]"
                 placeholder="Faire une recherche" 
                 v-model="searchQuery"
                 @input="handleSearch"
@@ -183,62 +183,6 @@
         </div>
         
         <CocktailGrid :cocktails="featuredCocktails" />
-      </div>
-    </section>
-    
-    <!-- AI Suggestion -->
-    <section class="py-16 bg-light-dark">
-      <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row gap-8">
-          <div class="md:w-2/3">
-            <h2 class="text-3xl font-bold mb-6">Personalized Recommendations</h2>
-            <p class="text-lg mb-8">Our AI analyzes your preferences to suggest cocktails you'll love. Discover new flavors and expand your mixology horizons.</p>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div v-for="(feature, index) in features" :key="index" class="flex">
-                <div class="mr-4 p-2 bg-secondary rounded-full h-min">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="feature.icon" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold mb-2">{{ feature.title }}</h3>
-                  <p class="text-gray-600">{{ feature.description }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="md:w-1/3">
-            <AiSuggestion :suggestion="aiSuggestion" />
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Popular Categories -->
-    <section class="py-16">
-      <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-8 text-center">Popular Categories</h2>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div 
-            v-for="(category, index) in popularCategories" 
-            :key="index"
-            class="relative rounded-lg overflow-hidden group cursor-pointer"
-          >
-            <img 
-              :src="category.image" 
-              :alt="category.name" 
-              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
-            <div class="absolute bottom-0 left-0 p-4">
-              <h3 class="text-xl font-bold text-white">{{ category.name }}</h3>
-              <p class="text-white text-sm">{{ category.count }} cocktails</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </div>

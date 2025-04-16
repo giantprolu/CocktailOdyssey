@@ -24,6 +24,7 @@
       <div class="cocktail-card-unique__alcohol-badge">
         <span>{{ cocktail.alcoholPercentage || "67%" }} alc</span>
       </div>
+      
       <div class="cocktail-card-unique__title-row">
         <h3 class="cocktail-card-unique__title">
           {{ cocktail.name || "Card title" }}
@@ -41,6 +42,17 @@
           <path d="M12 6v6l4 2" />
         </svg>
         <span>{{ cocktail.time || "7" }} min</span>
+      </div>
+
+      <!-- Ingredients chips -->
+      <div class="cocktail-card-unique__ingredients">
+        <div 
+          v-for="ingredient in (cocktail.ingredients || defaultIngredients)" 
+          :key="ingredient" 
+          class="cocktail-card-unique__ingredient-chip"
+        >
+          {{ ingredient }}
+        </div>
       </div>
     </div>
   </div>
@@ -63,6 +75,9 @@ const emit = defineEmits(["toggle-favorite"]);
 const toggleFavorite = () => {
   emit("toggle-favorite", props.cocktail.id);
 };
+
+// Ingrédients par défaut si non fournis dans le cocktail
+const defaultIngredients = ["Gin", "Camparis", "Spritz"];
 </script>
 
 <style scoped>
@@ -117,15 +132,15 @@ const toggleFavorite = () => {
 
 .cocktail-card-unique__alcohol-badge {
   position: absolute;
-  bottom: 80px;
+  top: 50px;  /* Positionner au-dessus du footer */
   left: 12px;
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 14px;
   color: #333;
-  backdrop-filter: blur(8px); /* Ajoute un flou à l’arrière-plan */
-  -webkit-backdrop-filter: blur(8px); /* Pour la compatibilité avec Safari */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .cocktail-card-unique__footer {
@@ -134,7 +149,13 @@ const toggleFavorite = () => {
   left: 0;
   right: 0;
   padding: 80px 16px 12px;
-  background: linear-gradient(#ffffff00 20%, white 80%  );
+  background: linear-gradient(#ffffff00 20%, white 80%);
+  transition: padding-top 0.3s ease; 
+  z-index: 10;
+}
+
+.cocktail-card-unique:hover .cocktail-card-unique__footer {
+  padding-top: 100px; /* Augmenter le padding au survol pour faire place aux ingrédients */
 }
 
 .cocktail-card-unique__title-row {
@@ -174,5 +195,31 @@ const toggleFavorite = () => {
   fill: none;
   stroke: #0a2540;
   stroke-width: 1.5px;
+}
+
+/* Styles pour les ingrédients */
+.cocktail-card-unique__ingredients {
+  height: 0;
+  opacity: 0;
+  margin-top: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.cocktail-card-unique:hover .cocktail-card-unique__ingredients {
+  display: flex;
+  height: auto;
+  opacity: 1;
+}
+
+.cocktail-card-unique__ingredient-chip {
+  background-color: #0a2540;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>
