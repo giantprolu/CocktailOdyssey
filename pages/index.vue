@@ -1,34 +1,172 @@
 <template>
   <div>
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-primary to-secondary py-16 md:py-24">
+    <!-- Hero Section avec fond dynamique en fonction de l'onglet actif -->
+    <section 
+      :class="[
+        activeTab === 'ai' ? 'bg-primary-orange' : 'bg-[#002233]', 
+        'py-16 md:py-24 rounded-3xl mx-3 -mt-12 relative overflow-hidden z-10 transition-colors duration-300'
+      ]"
+    >
+      <!-- Décorations splash - visibles uniquement en mode "ai" -->
+      <template v-if="activeTab === 'ai'">
+        <div class="absolute bottom-0 -left-10">
+          <img src="/soleil.svg" alt="" class="w-32 h-32 opacity-30" />
+        </div>
+        <div class="absolute -bottom-10 left-20">
+          <img src="/soleil.svg" alt="" class="w-20 h-20 opacity-20" />
+        </div>
+        <div class="absolute top-0 right-0">
+          <img src="/soleil.svg" alt="" class="w-40 h-40 opacity-30" />
+        </div>
+        <div class="absolute bottom-10 -right-10">
+          <img src="/soleil.svg" alt="" class="w-28 h-28 opacity-20" />
+        </div>
+      </template>
+
+      <!-- Décorations lune - visibles uniquement en mode "classic" -->
+      <template v-else>
+        <div class="absolute top-10 left-10">
+          <img src="/lune.svg" alt="" class="w-40 h-40 opacity-80" />
+        </div>
+        <div class="absolute bottom-0 right-0">
+          <img src="/lune.svg" alt="" class="w-48 h-48 opacity-80" />
+        </div>
+      </template>
+      
       <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row items-center">
-          <div class="md:w-1/2 mb-8 md:mb-0">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Discover Your Perfect Cocktail</h1>
-            <p class="text-white text-lg mb-8">Explore hundreds of cocktail recipes and find your new favorite drink. From classics to creative concoctions.</p>
-            
-            <div class="max-w-md">
-              <SearchBar @search="handleSearch" />
-            </div>
-            
-            <div class="mt-8 flex flex-wrap gap-4">
+        <div class="flex flex-col items-center text-center max-w-3xl mx-auto pt-16">
+          <h1 
+            :class="[
+              activeTab === 'ai' ? 'text-primary-blue' : 'text-primary-orange',
+              'font-serif text-heading leading-heading tracking-heading text-center mb-10 font-normal'
+            ]"
+          >
+            Envie d'un bon cocktail ?
+          </h1>
+          
+          <!-- Onglets de recherche -->
+          <div class="w-full max-w-2xl mx-auto mb-10">
+            <div 
+                class="grid grid-cols-2 rounded-lg p-6 mb-11"
+                :class="{ 'bg-[#ffbf73]': activeTab === 'ai', 'bg-[#EFF8FF]': activeTab === 'classic' }">
               <button 
-                v-for="category in categories" 
-                :key="category"
-                class="px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors"
+                class="py-6 px-7 rounded-md font-rubik font-black text-tab leading-tab tracking-tab align-middle transition-colors"
+                :class="{ 
+                  'bg-primary-orange shadow-md text-cream': activeTab === 'ai', 
+                  'bg-transparent hover:text-primary-orange text-[#002233]': activeTab !== 'ai' 
+                }"
+                @click="activeTab = 'ai'"
               >
-                {{ category }}
+                Recherche avec l'IA
+              </button>
+              <button 
+                class="py-6 px-7 rounded-md font-rubik font-black text-tab leading-tab tracking-tab align-middle text-cream transition-colors"
+                :class="{ 'bg-primary-orange shadow-md': activeTab === 'classic', 'bg-transparent hover:text-black': activeTab !== 'classic' }"
+                @click="activeTab = 'classic'"
+              >
+                Recherche classique
               </button>
             </div>
           </div>
-          
-          <div class="md:w-1/2 flex justify-center">
-            <img 
-              src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-              alt="Cocktail collection" 
-              class="rounded-lg shadow-xl max-w-full h-auto"
-            />
+            
+          <!-- Contenu différent selon l'onglet -->
+          <div v-if="activeTab === 'ai'" class="w-full mb-8">
+            <!-- Barre de recherche pour IA -->
+            <div class="relative w-full mb-3">
+              <input 
+                type="text" 
+                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles"
+                placeholder="Faire une recherche avec l'IA" 
+                v-model="searchQuery"
+                @input="handleSearch"
+              />
+              <button class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-primary-orange/10 p-2 rounded-full">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.60234 14.3977C9.38088 14.1762 9.11051 14.0099 8.813 13.912L3 12L8.813 10.088C9.11051 9.99015 9.38088 9.82379 9.60234 9.60234C9.82379 9.38088 9.99015 9.11051 10.088 8.813L12 3L13.912 8.813C14.0099 9.11051 14.1762 9.38088 14.3977 9.60234C14.6191 9.82379 14.8895 9.99015 15.187 10.088L21 12L15.187 13.912C14.8895 14.0099 14.6191 14.1762 14.3977 14.3977C14.1762 14.6191 14.0099 14.8895 13.912 15.187L12 21L10.088 15.187C9.99015 14.8895 9.82379 14.6191 9.60234 14.3977ZM9.60234 14.3977L2.5 20.5M5 3V7M19 17V21M3 5H7M17 19H21" stroke="#FF8A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Switch utilisateur cave -->
+            <div class="flex items-center space-x-2 text-sm pl-2 mb-6">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="usePersonalCave" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-orange"></div>
+              </label>
+              <span class="font-rubik font-light italic text-base leading-[100%] tracking-[0.03em] text-blue-900">Utiliser ma cave</span>
+            </div>
+          </div>
+
+          <!-- Recherche classique -->
+          <div v-else class="w-full">
+            <!-- Champ de recherche classique -->
+            <div class="relative w-full mb-3">
+              <input 
+                type="text" 
+                class="w-full py-4 px-5 pl-6 pr-12 rounded-full bg-white shadow-md font-rubik font-medium text-base leading-input tracking-input text-input-text placeholder-styles"
+                placeholder="Faire une recherche" 
+                v-model="searchQuery"
+                @input="handleSearch"
+              />
+                <button class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-100 p-2 rounded-full">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21.0002 21L16.7002 16.7M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#012436" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+            </div>
+                  
+            <!-- Switch utilisateur cave -->
+            <div class="flex items-center space-x-2 text-sm pl-2 mb-6">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="usePersonalCave" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-orange"></div>
+              </label>
+              <span class="font-rubik font-light italic text-base leading-[100%] tracking-[0.03em] text-white">Utiliser ma cave</span>
+            </div>
+            
+            <!-- Options de filtre -->
+            <div class="grid grid-cols-3 gap-4 mb-4">
+              <div class="flex flex-col">
+                <label class="text-primary-orange text-left mb-2">Alcools</label>
+                <button class="bg-white text-blue-900 rounded-md py-2 px-4 flex justify-between items-center">
+                  <span>Sélectionner</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-col">
+                <label class="text-primary-orange text-left mb-2">Diluants</label>
+                <button class="bg-white text-blue-900 rounded-md py-2 px-4 flex justify-between items-center">
+                  <span>Sélectionner</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex flex-col">
+                <label class="text-primary-orange text-left mb-2">Ingrédients</label>
+                <button class="bg-white text-blue-900 rounded-md py-2 px-4 flex justify-between items-center">
+                  <span>Sélectionner</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-6 mb-2">
+              <button class="bg-primary-orange text-white py-2 px-6 rounded-md flex items-center">
+                <span class="mr-2">Ajouter à ma cave</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" class="h-4 w-4">
+                <span class="text-white">Sans alcool</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,10 +246,16 @@
 
 <script setup>
 import { useCocktailStore } from '~/stores/cocktails';
+import { ref } from 'vue';
 
 const cocktailStore = useCocktailStore();
+const activeTab = ref('ai'); // Default to AI tab
 const featuredCocktails = computed(() => cocktailStore.getAllCocktails.slice(0, 4));
 const aiSuggestion = computed(() => cocktailStore.getAiSuggestion);
+
+const searchQuery = ref('');
+const classicSearchQuery = ref('');
+const usePersonalCave = ref(false);
 
 const categories = ['Popular', 'Classic', 'Tropical', 'Refreshing', 'Strong', 'Non-Alcoholic'];
 
@@ -129,7 +273,7 @@ const features = [
   {
     title: 'Seasonal Suggestions',
     description: 'Get recommendations based on season, weather, and current trends.',
-    icon: 'M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z'
+    icon: 'M3 15a4 4 0 004 4h9a5 5 0 10-0.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z'
   },
   {
     title: 'Personalized History',
@@ -150,3 +294,35 @@ const handleSearch = (query) => {
   console.log('Searching for:', query);
 };
 </script>
+
+<style scoped>
+.placeholder-styles::placeholder {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #012436;
+  opacity: 1; /* Firefox applique une opacité par défaut */
+}
+
+/* Pour les différents navigateurs */
+.placeholder-styles::-webkit-input-placeholder {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #012436;
+}
+
+.placeholder-styles::-moz-placeholder {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #012436;
+  opacity: 1;
+}
+</style>
