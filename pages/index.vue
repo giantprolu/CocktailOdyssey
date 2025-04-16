@@ -91,9 +91,13 @@
             <div class="flex items-center space-x-2 text-sm pl-2 mb-6">
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" v-model="usePersonalCave" class="sr-only peer">
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-orange"></div>
-              </label>
-              <span class="font-rubik font-light italic text-base leading-[100%] tracking-[0.03em] text-blue-900">Utiliser ma cave</span>
+                <div class="w-12 h-7 bg-white border-2 border-[#bdbdbd] peer-focus:outline-none rounded-full peer peer-checked:bg-white peer-checked:border-2 peer-checked:border-[#012436] after:content-[''] after:absolute after:top-1 after:left-1 after:bg-[#bdbdbd] after:border-[#bdbdbd] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5 peer-checked:after:bg-[#012436]"></div>              </label>
+              <span 
+                class="font-rubik font-medium text-cave leading-cave tracking-cave text-decoration-cap-height"
+                :class="usePersonalCave ? 'text-blue-900' : 'text-white'"
+              >
+                Utiliser ma cave
+              </span>
             </div>
           </div>
 
@@ -119,9 +123,13 @@
             <div class="flex items-center space-x-2 text-sm pl-2 mb-6">
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" v-model="usePersonalCave" class="sr-only peer">
-                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-orange"></div>
-              </label>
-              <span class="font-rubik font-light italic text-base leading-[100%] tracking-[0.03em] text-white">Utiliser ma cave</span>
+                <div class="w-12 h-7 bg-white border-2 border-[#bdbdbd] peer-focus:outline-none rounded-full peer peer-checked:bg-white peer-checked:border-2 peer-checked:border-primary-orange after:content-[''] after:absolute after:top-1 after:left-1 after:bg-[#bdbdbd] after:border-[#bdbdbd] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5 peer-checked:after:bg-primary-orange"></div>              </label>
+              <span 
+                class="font-rubik font-medium text-cave leading-cave tracking-cave text-decoration-cap-height"
+                :class="usePersonalCave ? 'text-primary-orange' : 'text-white'"
+              >
+                Utiliser ma cave
+              </span>
             </div>
             
             <!-- Options de filtre -->
